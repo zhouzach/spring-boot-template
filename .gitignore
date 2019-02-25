@@ -32,7 +32,7 @@ out/
 *.xls
 *.xlsx
 
-wall-street-english.iml
+spring-boot-common.iml
 
 src/main/resources/application-local.properties
 src/main/resources/application.properties
