@@ -1,6 +1,5 @@
 package org.rabbit.utils;
 
-import lombok.val;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -17,17 +16,18 @@ import java.util.stream.Collectors;
 public class ExcelWriter {
 
 
-    public void write2OutputStream(List<String> headerList, List<Map<String, Object>> data,
-                                   Workbook workbook, String sheetName,
-                                   OutputStream outputStream) {
+    public void write2OutputStream(
+            Workbook workbook, String sheetName,
+            Integer x, Integer y,
+            List<String> headerList, List<Map<String, Object>> data,
+            OutputStream outputStream) {
         Sheet sheet = workbook.createSheet(sheetName);
 
-        createHeaderRow(headerList, sheet);
+        createHeaderRow(x, y, headerList, sheet);
 
-        int rowCount = 0;
         for (Map<String, Object> map : data) {
-            Row row = sheet.createRow(++rowCount);
-            setCellValue(map, row);
+            Row row = sheet.createRow(++x);
+            setCellValue(y, map, row);
         }
 
         try {
@@ -37,11 +37,11 @@ public class ExcelWriter {
         }
     }
 
-    private void setCellValue(Map<String, Object> map, Row row) {
+    private void setCellValue(Integer y, Map<String, Object> map, Row row) {
         Object[] keys = map.keySet().toArray();
-        for (int i = 0; i < keys.length; i++) {
-            row.createCell(i)
-                    .setCellValue(String.valueOf(map.get(keys[i])));
+        for (int k = 0; k < keys.length; k++, y++) {
+            row.createCell(y)
+                    .setCellValue(String.valueOf(map.get(keys[k])));
         }
     }
 
@@ -58,15 +58,15 @@ public class ExcelWriter {
         return cellStyle;
     }
 
-    private void createHeaderRow(List<String> headerList, Sheet sheet) {
+    private void createHeaderRow(int x, int y, List<String> headerList, Sheet sheet) {
 
-        Row row = sheet.createRow(0);
+        Row row = sheet.createRow(x);
         CellStyle cellStyle = createHeaderStyle(sheet);
 
-        for (int i = 0; i < headerList.size(); i++) {
-            Cell cellTitle = row.createCell(i);
+        for (int k = 0; k < headerList.size(); y++, k++) {
+            Cell cellTitle = row.createCell(y);
             cellTitle.setCellStyle(cellStyle);
-            cellTitle.setCellValue(headerList.get(i));
+            cellTitle.setCellValue(headerList.get(k));
         }
     }
 
@@ -99,16 +99,16 @@ public class ExcelWriter {
         ExcelWriter excelWriter = new ExcelWriter();
 
         List<Book> listBook = excelWriter.getListBook();
-        val books = listBook.stream().map(ObjectHelper::toMap).collect(Collectors.toList());
-        String excelFilePath = "JavaBooks3.xlsx";
+        List<Map<String, Object>> data = listBook.stream().map(ObjectHelper::toMap).collect(Collectors.toList());
+        String filename = "JavaBooks.xlsx";
 
         List<String> header = Arrays.asList("title", "author", "price");
 
         Workbook workbook = new XSSFWorkbook();
 
         try {
-            OutputStream outputStream = new FileOutputStream(excelFilePath);
-            excelWriter.write2OutputStream(header, books, workbook, "book1", outputStream);
+            OutputStream outputStream = new FileOutputStream(filename);
+            excelWriter.write2OutputStream(workbook, "sheet1", 5, 5, header, data, outputStream);
         } catch (IOException exp) {
             exp.printStackTrace();
         }

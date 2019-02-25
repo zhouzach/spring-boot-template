@@ -4,31 +4,28 @@ package org.rabbit.controller;
 import lombok.val;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.rabbit.module.Book;
 import org.rabbit.module.Msg;
 import org.rabbit.utils.ExcelWriter;
 import org.rabbit.utils.ObjectHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1")
-public class HelloController {
+public class ExportController {
 
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
@@ -58,27 +55,27 @@ public class HelloController {
                     List<Book> listBook = excelWriter.getListBook();
                     val books = listBook.stream().map(ObjectHelper::toMap).collect(Collectors.toList());
 
-//                    Workbook workbook = new HSSFWorkbook();
-                    Workbook workbook = new XSSFWorkbook();
+                    Workbook workbook = new HSSFWorkbook();
+//                    Workbook workbook = new XSSFWorkbook();
 
                     List<String> header = Arrays.asList("title", "author", "price");
 //                    excelWriter.write2OutputStream(header, listBook, workbook, "book1", output);
-                    excelWriter.write2OutputStream(header, books, workbook, "book1", output);
 
 //                    String fileName = URLEncoder.encode("download", "UTF-8");
 //                    fileName = URLDecoder.decode(fileName, "ISO8859_1");
-//                    System.out.println("getContentType: " + response.getContentType());
-//                    System.out.println("Content-disposition: " + response.getHeader("Content-disposition"));
+                    System.out.println("getContentType: " + response.getContentType());
+                    System.out.println("Content-disposition: " + response.getHeader("Content-Disposition"));
 
                     response.setContentType("application/octet-stream");
-                    response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Info.xls");
+                    response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+"Info1.xls"+"\"");
 
 
+                    excelWriter.write2OutputStream(workbook, "sheet1", 0, 0, header, books, output);
                     System.out.println("getContentType: " + response.getContentType());
-                    System.out.println("Content-disposition: " + response.getHeader("Content-disposition"));
+                    System.out.println("Content-disposition: " + response.getHeader("Content-Disposition"));
 //                    response.setHeader("Content-disposition", "attachment; filename=Info.xls");
 //                    response.setContentType("application/msexcel");
-                    output.close();
+//                    output.close();
                 }catch (IOException exp) {
                     exp.printStackTrace();
                 }
