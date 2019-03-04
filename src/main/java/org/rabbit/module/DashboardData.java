@@ -1,14 +1,12 @@
 package org.rabbit.module;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 import java.util.Map;
 
-@Getter
-@Setter
-public class FullData {
+@Data
+public class DashboardData {
     private List<List<String>> load;
     private Map<String, Object> totals;
 

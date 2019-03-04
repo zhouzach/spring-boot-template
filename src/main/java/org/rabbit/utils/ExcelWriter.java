@@ -85,12 +85,16 @@ public class ExcelWriter {
     }
 
     public List<Book> getListBook() {
-        Book book1 = new Book("Head First Java", "Kathy Serria", 79);
-        Book book2 = new Book("Effective Java", "Joshua Bloch", 36);
-        Book book3 = new Book("Clean Code", "Robert Martin", 42);
-        Book book4 = new Book("Thinking in Java", "Bruce Eckel", 35);
+        Book book1 = new Book();
+        book1.setTitle("Head First Java");
+        book1.setAuthor("Kathy Serria");
+        book1.setPrice(79);
+        Book book2 = new Book();
+        book2.setTitle("Effective Java");
+        book2.setAuthor("Joshua Bloch");
+        book2.setPrice(36);
 
-        List<Book> listBook = Arrays.asList(book1, book2, book3, book4);
+        List<Book> listBook = Arrays.asList(book1, book2);
 
         return listBook;
     }

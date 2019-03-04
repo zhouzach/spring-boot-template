@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/export")
 public class ExportController {
 
 
@@ -43,7 +43,7 @@ public class ExportController {
     }
 
 
-    @GetMapping("/export")
+    @GetMapping("/excel")
     public void exportInfo(HttpServletResponse response){
 
 //                response.reset();

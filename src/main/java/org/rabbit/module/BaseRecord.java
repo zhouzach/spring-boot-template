@@ -11,27 +11,22 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * 数据库Model统一公共字段
- * id:  自增 id
- * createdTime: 建立时间 ， 以系统时间区域为准
- * updatedTime: 更新时间
- * created by pengmingguo on 2/8/18
  */
 @MappedSuperclass
 @Getter
 @Setter
-public abstract class BaseModel implements Serializable {
+public abstract class BaseRecord implements Serializable {
 
-    private static final long serialVersionUID = -6387969931129402263L;
+    private static final long serialVersionUID = -7497969931129502264L;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     protected Integer id;
 
-//    @Column(name = "gmt_create")
+//    @Column(name = "create_time")
 //    private Date createdTime;
 //
-//    @Column(name = "gmt_modified")
+//    @Column(name = "modified_time")
 //    private Date updatedTime;
 //
 //    @PreUpdate
@@ -50,11 +45,11 @@ public abstract class BaseModel implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof BaseModel)) {
+        if (!(o instanceof BaseRecord)) {
             return false;
         }
-        BaseModel baseModel = (BaseModel) o;
-        return Objects.equals(id, baseModel.id);
+        BaseRecord baseRecord = (BaseRecord) o;
+        return Objects.equals(id, baseRecord.id);
     }
 
     @Override

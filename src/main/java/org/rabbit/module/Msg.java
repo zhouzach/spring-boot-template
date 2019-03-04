@@ -1,15 +1,14 @@
 package org.rabbit.module;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
 
-/** created by pengmingguo on 2/9/18 */
-@Getter
-@Setter
+@Data
 public class Msg<T> implements Serializable {
-  private static final long serialVersionUID = -2417860503542275729L;
+  private static final long serialVersionUID = -3417860513542275739L;
 
   public Msg(Integer status) {
     this.status = status;
