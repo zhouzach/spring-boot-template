@@ -1,5 +1,7 @@
-package org.rabbit.utils.cmd.systemout;
+package org.rabbit.service;
 
+
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,6 +10,7 @@ import java.io.InputStreamReader;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
+@Service
 public class InvokeShellService {
 
   private static class StreamGobbler implements Runnable {

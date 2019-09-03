@@ -23,6 +23,7 @@ project/plugins/project/
 
 # Java-IDE specific
 out/
+target
 
 # redis
 *.rdb
@@ -33,7 +34,7 @@ out/
 *.xlsx
 *.db
 
-spring-boot-common.iml
+spring-boot-template.iml
 
 src/main/resources/application-local.properties
 src/main/resources/application.properties
