@@ -28,6 +28,10 @@ public class HelloController {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
 
+    @GetMapping("/test/exception")
+    public void handleRequest() {
+        throw new RuntimeException("test exception");
+    }
 
     @GetMapping("")
     public Msg get(HttpServletRequest request, HttpServletResponse response) {
